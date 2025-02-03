@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klasik Format - Bil Kazan</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/game.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+    <div class="game-container classic-mode">
+        <header class="game-header">
+            <div class="header-left">
+                <a href="index.html" class="back-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                    Geri Dön
+                </a>
+            </div>
+            <div class="header-center">
+                <h1>Bil Kazan</h1>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <span class="username">Misafir Kullanıcı</span>
+                    <button class="login-btn">Giriş Yap</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="game-main">
+            <div class="prize-section">
+                <div class="prize-pool">
+                    <h3>Ödül Havuzu</h3>
+                    <div class="prize-amount">100 TL</div>
+                </div>
+                <div class="participants">
+                    <h3>Katılımcı Sayısı</h3>
+                    <div class="participant-count">1</div>
+                </div>
+            </div>
+
+            <div class="question-section">
+                <div class="question-card">
+                    <div class="question-header">
+                        <span class="question-number">Soru 1</span>
+                        <span class="time-left">Süre Sınırı Yok</span>
+                    </div>
+                    <div class="question-content">
+                        <p class="question-text"></p>
+                    </div>
+                    <form class="answer-form">
+                        <div class="input-group">
+                            <input type="text" class="answer-input" placeholder="Cevabınızı buraya yazın..." required>
+                            <button type="submit" class="submit-btn">
+                                <span>Gönder</span>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path d="M22 2L11 13M22 2L15 22L11 13M11 13L2 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="hint-section">
+                <button class="show-hints-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 17H12.01M12 14V8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    İpuçlarını Göster
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <div class="hints-window" style="display: none;">
+        <div class="hints-header">
+            <h3>İpuçları</h3>
+            <button class="close-hints-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+        <div class="hints-content">
+            <!-- İpuçları buraya eklenecek -->
+        </div>
+    </div>
+
+    <div class="notifications"></div>
+
+    <script type="module" src="js/classic.js"></script>
+</body>
+</html> 

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap - Bil Kazan</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-header">
+                <h1>Bil Kazan</h1>
+                <div class="cosmic-particles"></div>
+            </div>
+
+            <div class="auth-tabs">
+                <button class="tab-btn active" data-tab="login">Giriş Yap</button>
+                <button class="tab-btn" data-tab="register">Kayıt Ol</button>
+            </div>
+
+            <!-- Giriş Formu -->
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="loginEmail">E-posta</label>
+                    <input type="email" id="loginEmail" placeholder="ornek@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Şifre</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="auth-btn">Giriş Yap</button>
+            </form>
+
+            <!-- Kayıt Formu -->
+            <form id="registerForm" class="auth-form hidden">
+                <div class="form-group">
+                    <label for="registerEmail">E-posta</label>
+                    <input type="email" id="registerEmail" placeholder="ornek@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerName">Ad</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerSurname">Soyad</label>
+                    <input type="text" id="registerSurname" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Şifre</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPasswordConfirm">Şifre Tekrar</label>
+                    <input type="password" id="registerPasswordConfirm" required>
+                </div>
+                <button type="submit" class="auth-btn">Kayıt Ol</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification container -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script type="module" src="js/notificationManager.js"></script>
+    <script type="module" src="js/auth.js"></script>
+</body>
+</html>

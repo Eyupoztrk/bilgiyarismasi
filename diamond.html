@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elmas Kazan - Bil Kazan</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/diamond.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <div class="header-left">
+                <a href="index.html" class="back-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                    Geri Dön
+                </a>
+            </div>
+            <div class="logo">
+                <h1>Bil Kazan</h1>
+                <div class="cosmic-particles"></div>
+            </div>
+            <div class="user-info">
+                <span class="diamond-balance">💎 <span id="diamondCount">0</span></span>
+                <span class="username">Misafir Kullanıcı</span>
+                <button class="login-btn">Giriş Yap</button>
+            </div>
+        </header>
+
+        <main class="diamond-game-container">
+            <div class="diamond-status">
+                <h2>Elmas Kazan</h2>
+                <p>Reklam İzle Elmas Kazan!</p>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-info">
+                        <span class="progress-text">0/3 Görev Tamamlandı</span>
+                        <button class="refresh-tasks-btn" onclick="refreshTasks()">
+                            <span class="refresh-icon">🔄</span>
+                            Görevleri Yenile (10 💎)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tasks-container">
+                <div class="task-list">
+                    <div class="task-item" data-reward="25">
+                        <div class="task-icon">🎯</div>
+                        <h3>Görev 1</h3>
+                        <p>Bir video reklamı izleyin</p>
+                        <div class="task-reward">Ödül: 25 💎</div>
+                        <a href="#" class="task-link" target="_blank" onclick="completeTask(0, 25)">Göreve Git</a>
+                    </div>
+                    <div class="task-item" data-reward="40">
+                        <div class="task-icon">📚</div>
+                        <h3>Görev 2</h3>
+                        <p>Bir makale reklamı okuyun</p>
+                        <div class="task-reward">Ödül: 40 💎</div>
+                        <a href="#" class="task-link" target="_blank" onclick="completeTask(1, 40)">Göreve Git</a>
+                    </div>
+                    <div class="task-item" data-reward="100">
+                        <div class="task-icon">🔍</div>
+                        <h3>Görev 3</h3>
+                        <p>Bir arama reklamı görüntüleyin</p>
+                        <div class="task-reward">Ödül: 100 💎</div>
+                        <a href="#" class="task-link" target="_blank" onclick="completeTask(2, 100)">Göreve Git</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification container -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <script type="module" src="js/notificationManager.js"></script>
+    <script type="module" src="js/diamond.js"></script>
+</body>
+</html>

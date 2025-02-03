@@ -1,0 +1,247 @@
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(-5px);
+}
+
+.diamond-status {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px;
+    background: var(--card-bg);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+}
+
+.diamond-status h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.progress-container {
+    margin-top: 20px;
+}
+
+.progress-bar {
+    height: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress {
+    height: 100%;
+    background: var(--gradient-1);
+    border-radius: 5px;
+    transition: width 0.5s ease;
+}
+
+.progress-text {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+.tasks-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.task-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.task-item {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.task-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.task-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.task-item:hover::before {
+    opacity: 1;
+}
+
+.task-icon {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.task-item h3 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.task-item p {
+    color: var(--text-color);
+    margin-bottom: 20px;
+    opacity: 0.8;
+}
+
+.task-reward {
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+.task-link {
+    display: inline-block;
+    padding: 12px 30px;
+    background: var(--gradient-1);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.task-link:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(108, 99, 255, 0.2);
+}
+
+.task-item.completed {
+    border-color: var(--accent-color);
+    opacity: 0.7;
+}
+
+.task-item.completed .task-link {
+    background: #4CAF50;
+    cursor: default;
+    pointer-events: none;
+}
+
+.notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.notification {
+    background: white;
+    color: #333;
+    padding: 15px 25px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 280px;
+}
+
+.notification.success {
+    background: #4CAF50;
+    color: white;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.refresh-tasks-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--gradient-1);
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.refresh-tasks-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(108, 99, 255, 0.2);
+}
+
+.refresh-tasks-btn:active {
+    transform: scale(0.98);
+}
+
+.refresh-icon {
+    font-size: 1.2em;
+    transition: transform 0.3s ease;
+}
+
+.refresh-tasks-btn:hover .refresh-icon {
+    transform: rotate(180deg);
+}
+
+.refresh-tasks-btn.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    background: gray;
+}
+
+@media (max-width: 768px) {
+    .tasks-container {
+        padding: 15px;
+    }
+    
+    .task-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .task-item {
+        padding: 20px;
+    }
+    
+    .diamond-status {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+} 

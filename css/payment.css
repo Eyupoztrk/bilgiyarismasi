@@ -1,0 +1,418 @@
+.payment-mode {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-dark);
+    padding: 20px;
+}
+
+.payment-layout {
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.balance-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.balance-card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.balance-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-hover);
+}
+
+.balance-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.balance-header h2 {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    background: linear-gradient(45deg, var(--primary), var(--primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.diamond-balance,
+.tl-balance {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    padding: 8px 16px;
+    background: var(--primary-dark);
+    border-radius: 12px;
+    border: 1px solid var(--primary);
+    box-shadow: 0 0 15px rgba(33, 150, 243, 0.2);
+}
+
+.balance-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.exchange-rate,
+.min-withdrawal,
+.available-withdrawal {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.tl-equivalent {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.conversion-section,
+.withdrawal-section {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.conversion-section:hover,
+.withdrawal-section:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-hover);
+}
+
+.conversion-section h2,
+.withdrawal-section h2 {
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    margin-bottom: 25px;
+    font-weight: 600;
+    background: linear-gradient(45deg, var(--primary), var(--primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.conversion-form,
+.withdrawal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 45px 12px 15px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-darker);
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px var(--primary-dark);
+}
+
+.currency-label {
+    position: absolute;
+    right: 15px;
+    top: 38px;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+.conversion-arrow {
+    display: flex;
+    justify-content: center;
+    color: var(--text-secondary);
+    margin: 10px 0;
+}
+
+.convert-btn,
+.withdraw-btn {
+    background: linear-gradient(45deg, var(--primary), var(--primary-light));
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.convert-btn:hover,
+.withdraw-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+}
+
+.convert-btn:active,
+.withdraw-btn:active {
+    transform: translateY(1px);
+}
+
+.convert-btn::after,
+.withdraw-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.convert-btn:hover::after,
+.withdraw-btn:hover::after {
+    opacity: 1;
+    transform: rotate(45deg) translate(50%, 50%);
+}
+
+/* IBAN Input Styles */
+.iban-group {
+    margin-top: 15px;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.iban-segments {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.iban-segment {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 4px 8px;
+}
+
+.iban-segment.country {
+    background: none;
+    color: #aaa;
+    padding: 4px;
+    font-weight: 500;
+}
+
+.iban-segment input {
+    background: none;
+    border: none;
+    color: #fff;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 16px;
+    padding: 4px;
+    text-align: center;
+    width: 100%;
+}
+
+/* Segment specific widths */
+.iban-segment.control input { width: 32px; }
+.iban-segment.bank input { width: 56px; }
+.iban-segment.branch input { width: 84px; }
+.iban-segment.account input { width: 160px; }
+
+/* Bank info styles */
+.bank-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    opacity: 0;
+    height: 0;
+    transition: all 0.3s ease;
+}
+
+.bank-info.visible {
+    opacity: 1;
+    height: auto;
+}
+
+.bank-info .bank-icon {
+    width: 24px;
+    height: 24px;
+    color: #aaa;
+}
+
+.bank-info .bank-name {
+    color: #fff;
+    font-size: 14px;
+}
+
+/* Mobile responsive styles */
+@media screen and (max-width: 480px) {
+    .iban-segments {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .iban-segment {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .iban-segment.country {
+        width: auto;
+        margin-bottom: -8px;
+    }
+
+    .iban-segment input {
+        width: 100% !important;
+        font-size: 18px;
+        letter-spacing: 1px;
+    }
+
+    .bank-info {
+        margin-top: 12px;
+        padding: 12px;
+    }
+
+    .bank-info .bank-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .bank-info .bank-name {
+        font-size: 16px;
+    }
+}
+
+/* Success and error states */
+.iban-group.success .iban-segment {
+    border: 1px solid rgba(46, 213, 115, 0.3);
+}
+
+.iban-group.error .iban-segment {
+    border: 1px solid rgba(255, 71, 87, 0.3);
+}
+
+.iban-group.success .bank-info {
+    background: rgba(46, 213, 115, 0.1);
+}
+
+.iban-group.error .bank-info {
+    background: rgba(255, 71, 87, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .balance-section {
+        grid-template-columns: 1fr;
+    }
+
+    .payment-layout {
+        padding: 10px;
+    }
+
+    .balance-card,
+    .conversion-section,
+    .withdrawal-section {
+        padding: 20px;
+    }
+
+    .diamond-balance,
+    .tl-balance {
+        font-size: 1.5rem;
+    }
+
+    .iban-segments {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .iban-segment.account input {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .payment-mode {
+        padding: 10px;
+    }
+
+    .balance-card,
+    .conversion-section,
+    .withdrawal-section {
+        padding: 15px;
+    }
+
+    .balance-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .diamond-balance,
+    .tl-balance {
+        width: 100%;
+        text-align: center;
+    }
+
+    .bank-info {
+        padding: 6px 10px;
+    }
+
+    .bank-name {
+        font-size: 0.85rem;
+    }
+
+    .iban-segments {
+        gap: 6px;
+    }
+
+    .iban-segment input {
+        font-size: 1rem;
+        padding: 10px;
+    }
+} 

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reklam İzle Kazan - Bil Kazan</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/game.css">
+    <link rel="stylesheet" href="css/pyramid.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container pyramid-mode">
+        <header class="game-header">
+            <div class="header-left">
+                <a href="index.html" class="back-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Geri Dön
+                </a>
+            </div>
+            <div class="header-center">
+                <h1>Reklam İzle Kazan</h1>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <span class="username">Misafir Kullanıcı</span>
+                    <button class="login-btn">Giriş Yap</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="game-main">
+            <div class="ad-game-layout">
+                <div class="ad-game-left">
+                    <div class="daily-progress-section">
+                        <div class="section-header">
+                            <h2>Günlük İlerleme</h2>
+                            <div class="daily-stats">
+                                <span class="stat-item">
+                                    <svg viewBox="0 0 24 24" width="16" height="16">
+                                        <path fill="currentColor" d="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z"/>
+                                    </svg>
+                                    Kalan Süre: 12:34:56
+                                </span>
+                            </div>
+                        </div>
+                        <div class="daily-progress">
+                            <!-- Progress will be inserted by JS -->
+                        </div>
+                    </div>
+
+                    <div class="rewards-section">
+                        <div class="section-header">
+                            <h2>Ödül Seviyeleri</h2>
+                            <div class="rewards-total">Toplam: 875 💎</div>
+                        </div>
+                        <div class="reward-tiers">
+                            <!-- Reward tiers will be inserted by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ad-game-right">
+                    <div class="ad-section">
+                        <div class="section-header">
+                            <h2>Reklam İzle</h2>
+                        </div>
+                        <div class="ad-content">
+                            <div class="ad-info-card">
+                                <div class="ad-stats">
+                                    <div class="stat-box">
+                                        <div class="stat-value">15</div>
+                                        <div class="stat-label">İzlenen</div>
+                                    </div>
+                                    <div class="stat-box">
+                                        <div class="stat-value">35</div>
+                                        <div class="stat-label">Kalan</div>
+                                    </div>
+                                    <div class="stat-box highlight">
+                                        <div class="stat-value">275</div>
+                                        <div class="stat-label">Kazanılan 💎</div>
+                                    </div>
+                                </div>
+                                <button class="watch-ad-btn">
+                                    <div class="btn-content">
+                                        <svg viewBox="0 0 24 24" width="24" height="24">
+                                            <path fill="currentColor" d="M10,16.5V7.5L16,12M20,4.4C19.4,4.2 15.7,4 12,4C8.3,4 4.6,4.19 4,4.38C2.44,4.9 2,8.4 2,12C2,15.59 2.44,19.1 4,19.61C4.6,19.81 8.3,20 12,20C15.7,20 19.4,19.81 20,19.61C21.56,19.1 22,15.59 22,12C22,8.4 21.56,4.91 20,4.4Z" />
+                                        </svg>
+                                        <span>Reklam İzle</span>
+                                    </div>
+                                    <div class="btn-shine"></div>
+                                </button>
+                            </div>
+                            <div class="rewards-grid">
+                                <div class="reward-item active">
+                                    <div class="reward-icon">🎯</div>
+                                    <div class="reward-count">5 Reklam</div>
+                                    <div class="reward-value">25 💎</div>
+                                </div>
+                                <div class="reward-item next">
+                                    <div class="reward-icon">🎯</div>
+                                    <div class="reward-count">15 Reklam</div>
+                                    <div class="reward-value">100 💎</div>
+                                </div>
+                                <div class="reward-item">
+                                    <div class="reward-icon">🎯</div>
+                                    <div class="reward-count">30 Reklam</div>
+                                    <div class="reward-value">250 💎</div>
+                                </div>
+                                <div class="reward-item">
+                                    <div class="reward-icon">🎯</div>
+                                    <div class="reward-count">50 Reklam</div>
+                                    <div class="reward-value">500 💎</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="notifications"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="js/notificationManager.js" type="module"></script>
+    <script src="js/pyramid.js" type="module"></script>
+</body>
+</html> 

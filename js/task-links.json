@@ -1,0 +1,23 @@
+{
+    "video_links": [
+        "https://www.youtube.com/watch?v=video1",
+        "https://www.youtube.com/watch?v=video2",
+        "https://www.dailymotion.com/video/x123456",
+        "https://vimeo.com/123456789",
+        "https://www.youtube.com/watch?v=video3"
+    ],
+    "reading_links": [
+        "https://www.wikipedia.org/wiki/article1",
+        "https://medium.com/article1",
+        "https://www.nationalgeographic.com/article1",
+        "https://www.scientificamerican.com/article1",
+        "https://www.space.com/article1"
+    ],
+    "search_links": [
+        "https://www.google.com/search?q=space",
+        "https://www.bing.com/search?q=universe",
+        "https://duckduckgo.com/?q=science",
+        "https://www.google.com/search?q=technology",
+        "https://www.bing.com/search?q=future"
+    ]
+} 

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ödeme Al - Bil Kazan</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/payment.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <div class="header-left">
+                <a href="index.html" class="back-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Geri Dön
+                </a>
+            </div>
+            <div class="logo">
+                <h1>Ödeme Al</h1>
+                <div class="cosmic-particles"></div>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <span class="username">Test Kullanıcı</span>
+                    <button class="login-btn">Çıkış Yap</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="game-container payment-mode">
+            <div class="payment-layout">
+                <div class="balance-section">
+                    <div class="balance-card">
+                        <div class="balance-header">
+                            <h2>Elmas Bakiyesi</h2>
+                            <div class="diamond-balance">0 💎</div>
+                        </div>
+                        <div class="balance-info">
+                            <div class="exchange-rate">1 💎 = 0.10 ₺</div>
+                            <div class="tl-equivalent">Toplam: 0.00 ₺</div>
+                        </div>
+                    </div>
+
+                    <div class="balance-card">
+                        <div class="balance-header">
+                            <h2>TL Bakiyesi</h2>
+                            <div class="tl-balance">0.00 ₺</div>
+                        </div>
+                        <div class="balance-info">
+                            <div class="min-withdrawal">Minimum Çekim: 100 ₺</div>
+                            <div class="available-withdrawal">Çekilebilir Bakiye: 0.00 ₺</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="conversion-section">
+                    <h2>Elmas Bozdur</h2>
+                    <div class="conversion-form">
+                        <div class="input-group">
+                            <label>Elmas Miktarı</label>
+                            <input type="number" id="diamondAmount" placeholder="Elmas miktarı girin">
+                            <span class="currency-label">💎</span>
+                        </div>
+                        <div class="conversion-arrow">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M12 5L12 19M12 19L19 12M12 19L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="input-group">
+                            <label>TL Karşılığı</label>
+                            <input type="text" id="tlAmount" readonly>
+                            <span class="currency-label">₺</span>
+                        </div>
+                        <button class="convert-btn">Elmasları Bozdur</button>
+                    </div>
+                </div>
+
+                <div class="withdrawal-section">
+                    <h2>Para Çekme</h2>
+                    <div class="withdrawal-form" id="withdrawalForm">
+                        <div class="input-group">
+                            <label>Çekilecek Miktar</label>
+                            <input type="number" id="withdrawAmount" placeholder="TL miktarı girin">
+                            <span class="currency-label">₺</span>
+                        </div>
+                        <div class="iban-group" id="ibanGroup">
+                            <label>IBAN Numarası</label>
+                            <div class="iban-input-wrapper">
+                                <div class="iban-segments">
+                                    <div class="iban-segment country">
+                                        <input type="text" value="TR" readonly>
+                                    </div>
+                                    <div class="iban-segment control">
+                                        <input type="text" maxlength="2" placeholder="00">
+                                    </div>
+                                    <div class="iban-segment bank">
+                                        <input type="text" maxlength="4" placeholder="0000">
+                                    </div>
+                                    <div class="iban-segment branch">
+                                        <input type="text" maxlength="6" placeholder="000000">
+                                    </div>
+                                    <div class="iban-segment account">
+                                        <input type="text" maxlength="12" placeholder="000000000000">
+                                    </div>
+                                </div>
+                                <input type="hidden" id="iban">
+                                <div class="bank-info" id="bankInfo">
+                                    <svg class="bank-icon" viewBox="0 0 24 24" width="24" height="24">
+                                        <path fill="currentColor" d="M11.5,1L2,6V8H21V6M16,10V17H19V10M2,22H21V19H2M10,10V17H13V10M4,10V17H7V10H4Z"/>
+                                    </svg>
+                                    <span class="bank-name">Banka Adı</span>
+                                </div>
+                                <div class="iban-status">
+                                    <svg class="status-icon success" viewBox="0 0 24 24" width="20" height="20">
+                                        <path fill="currentColor" d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"/>
+                                    </svg>
+                                    <svg class="status-icon error" viewBox="0 0 24 24" width="20" height="20">
+                                        <path fill="currentColor" d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M13 17H11V15H13V17M13 13H11V7H13V13Z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="withdraw-btn">Para Çekme Talebi Oluştur</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="notifications"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="js/notificationManager.js" type="module"></script>
+    <script src="js/payment.js" type="module"></script>
+</body>
+</html> 

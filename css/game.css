@@ -1,0 +1,1137 @@
+.game-container {
+    min-height: 100vh;
+    background: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: var(--card-bg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: transform 0.3s ease;
+}
+
+.back-btn:hover {
+    transform: translateX(-5px);
+}
+
+.back-btn svg {
+    stroke: currentColor;
+}
+
+.header-center h1 {
+    font-size: 1.8rem;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.game-main {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Klasik Format Özellikleri */
+.prize-section {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+}
+
+.prize-pool, .participants {
+    background: var(--card-bg);
+    padding: 20px 40px;
+    border-radius: 15px;
+    text-align: center;
+    min-width: 200px;
+}
+
+.prize-amount, .participant-count {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-top: 10px;
+}
+
+/* Piramit Format Özellikleri */
+.pyramid-mode .game-main {
+    padding: 20px;
+    max-width: 900px;
+}
+
+.pyramid-progress {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 0 auto 30px;
+    width: 100%;
+    max-width: 800px;
+}
+
+.level {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 25px;
+    background: var(--card-bg);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    opacity: 0.6;
+    border: 2px solid transparent;
+}
+
+.level .progress-bar {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.level .progress {
+    height: 100%;
+    background: var(--gradient-1);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.level.active {
+    opacity: 1;
+    transform: scale(1.02);
+    background: linear-gradient(135deg, rgba(108, 99, 255, 0.2), rgba(76, 175, 80, 0.2));
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+}
+
+.level.completed {
+    opacity: 1;
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(76, 175, 80, 0.1));
+    border: 2px solid var(--secondary-color);
+}
+
+.level-number {
+    font-weight: 600;
+    color: var(--primary-color);
+    min-width: 100px;
+}
+
+.prize {
+    font-weight: 700;
+    color: var(--accent-color);
+    min-width: 120px;
+    text-align: right;
+    font-size: 1.2rem;
+}
+
+/* Ortak Soru Kartı Stili */
+.question-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.question-card {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 800px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+}
+
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.question-number {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.progress-bar {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    margin: 0 20px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background: var(--gradient-1);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.question-content {
+    margin-bottom: 30px;
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+.input-group {
+    display: flex;
+    gap: 15px;
+}
+
+.answer-input {
+    flex: 1;
+    padding: 15px 20px;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.answer-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(108, 99, 255, 0.1);
+}
+
+.submit-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 12px;
+    background: var(--gradient-1);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+}
+
+.submit-btn:active {
+    transform: scale(0.98);
+}
+
+/* Diamond Counter Styles */
+.diamond-counter {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin-right: 15px;
+}
+
+.diamond-icon {
+    color: #00ffff;
+    filter: drop-shadow(0 0 2px rgba(0, 255, 255, 0.5));
+}
+
+.diamond-count {
+    font-weight: 600;
+    color: #fff;
+}
+
+/* Updated Hint Section Styles */
+.hint-section {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.show-hints-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    background: transparent;
+    color: var(--primary-color);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.show-hints-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Hints Window Styles */
+.hints-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+    z-index: 1000;
+    display: none;
+}
+
+.hints-window.active {
+    display: block;
+    animation: scaleIn 0.3s ease;
+}
+
+.hints-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hints-header h3 {
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+.close-hints-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.3s ease;
+}
+
+.close-hints-btn:hover {
+    transform: rotate(90deg);
+}
+
+.hints-content {
+    overflow-y: auto;
+    max-height: calc(80vh - 100px);
+    padding-right: 10px;
+}
+
+.hints-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.hints-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.hints-content::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+.hint-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.hint-item:hover {
+    transform: translateX(5px);
+}
+
+.hint-item.locked {
+    opacity: 0.7;
+}
+
+.hint-item.unlocked {
+    background: rgba(76, 175, 80, 0.1);
+    border: 1px solid var(--secondary-color);
+}
+
+.hint-cost {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.hint-text {
+    flex: 1;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: translate(-50%, -50%) scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+    .game-header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .header-left, .header-center, .header-right {
+        width: 100%;
+        text-align: center;
+    }
+
+    .back-btn {
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .header-center h1 {
+        font-size: 1.5rem;
+    }
+
+    .user-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .diamond-counter {
+        margin: 0 auto;
+    }
+
+    .game-main {
+        padding: 15px;
+    }
+
+    /* Klasik Format Mobil Stilleri */
+    .prize-section {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .prize-pool, .participants {
+        padding: 15px;
+        min-width: unset;
+        width: 100%;
+    }
+
+    .prize-amount, .participant-count {
+        font-size: 1.8rem;
+    }
+
+    /* Piramit Format Mobil Stilleri */
+    .level {
+        padding: 12px 15px;
+        gap: 10px;
+    }
+
+    .level-number {
+        min-width: 70px;
+        font-size: 0.9rem;
+    }
+
+    .prize {
+        min-width: 80px;
+        font-size: 0.9rem;
+    }
+
+    /* Soru Kartı Mobil Stilleri */
+    .question-card {
+        padding: 20px;
+    }
+
+    .question-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .question-content {
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+
+    .input-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .answer-input {
+        padding: 12px 15px;
+        font-size: 0.95rem;
+    }
+
+    .submit-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 12px;
+    }
+
+    /* İpucu Penceresi Mobil Stilleri */
+    .hints-window {
+        width: 95%;
+        max-height: 90vh;
+        padding: 15px;
+    }
+
+    .hints-header h3 {
+        font-size: 1.2rem;
+    }
+
+    .hint-item {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+
+    .hint-cost {
+        padding: 4px 8px;
+        font-size: 0.9rem;
+    }
+
+    /* Tebrik Penceresi Mobil Stilleri */
+    .completion-content {
+        padding: 25px 15px;
+    }
+
+    .completion-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .final-prize {
+        font-size: 2rem;
+    }
+
+    .share-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .share-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .back-to-home {
+        width: 100%;
+        margin-top: 20px;
+        padding: 12px;
+    }
+
+    /* Genel Mobil İyileştirmeleri */
+    button {
+        min-height: 44px; /* Dokunmatik hedef boyutu */
+    }
+
+    input {
+        min-height: 44px; /* Dokunmatik hedef boyutu */
+        font-size: 16px; /* iOS zoom önleme */
+    }
+
+    /* Kaydırma ve Dokunma İyileştirmeleri */
+    .hints-content {
+        -webkit-overflow-scrolling: touch;
+        max-height: calc(90vh - 120px);
+    }
+
+    /* Animasyon Optimizasyonları */
+    .hint-item:hover {
+        transform: none;
+    }
+
+    .submit-btn:hover, .share-btn:hover, .back-to-home:hover {
+        transform: none;
+    }
+
+    /* Gölge Efektleri Optimizasyonları */
+    .question-card, .prize-pool, .participants, .hints-window {
+        box-shadow: 0 4px 16px rgba(31, 38, 135, 0.1);
+    }
+}
+
+/* Küçük Ekranlar için Ek Optimizasyonlar */
+@media (max-width: 480px) {
+    .header-center h1 {
+        font-size: 1.3rem;
+    }
+
+    .prize-amount, .participant-count {
+        font-size: 1.5rem;
+    }
+
+    .question-content {
+        font-size: 0.95rem;
+    }
+
+    .level-number, .prize {
+        font-size: 0.85rem;
+        min-width: 60px;
+    }
+
+    .completion-content h2 {
+        font-size: 1.3rem;
+    }
+
+    .final-prize {
+        font-size: 1.8rem;
+    }
+}
+
+/* Yatay Mobil Görünüm Optimizasyonları */
+@media (max-height: 600px) and (orientation: landscape) {
+    .game-header {
+        padding: 10px;
+    }
+
+    .header-center h1 {
+        font-size: 1.2rem;
+    }
+
+    .game-main {
+        padding: 10px;
+    }
+
+    .question-card {
+        padding: 15px;
+    }
+
+    .hints-window {
+        max-height: 85vh;
+    }
+
+    .completion-content {
+        padding: 20px;
+    }
+}
+
+/* Tebrik Penceresi Stilleri */
+.completion-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.completion-content {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+}
+
+.completion-content h2 {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.prize-info {
+    margin: 30px 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+}
+
+.prize-label {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.final-prize {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+}
+
+.waiting-text {
+    color: #ffd700;
+    font-style: italic;
+    margin: 20px 0;
+}
+
+.social-share {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.share-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.share-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.share-btn.whatsapp {
+    background: #25D366;
+    color: white;
+}
+
+.share-btn.twitter {
+    background: #1DA1F2;
+    color: white;
+}
+
+.share-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.back-to-home {
+    margin-top: 30px;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 12px;
+    background: var(--gradient-1);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back-to-home:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(31, 38, 135, 0.2);
+}
+
+@media (max-width: 768px) {
+    .completion-content {
+        padding: 30px 20px;
+    }
+
+    .completion-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .final-prize {
+        font-size: 2rem;
+    }
+
+    .share-buttons {
+        flex-direction: column;
+    }
+
+    .share-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Diamond Window Styles */
+.diamond-window {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 900px;
+    margin: 20px auto;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+    animation: fadeInUp 0.6s ease;
+}
+
+.diamond-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.diamond-header h2 {
+    font-size: 2rem;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+}
+
+.diamond-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.diamond-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.diamond-item:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.diamond-item::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
+    opacity: 0;
+}
+
+.diamond-item:hover::before {
+    animation: shine 1.5s ease;
+}
+
+.diamond-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: #4facfe;
+}
+
+.diamond-amount {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin: 10px 0;
+}
+
+.diamond-price {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+.diamond-button {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.diamond-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+}
+
+.diamond-description {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    opacity: 0.7;
+    margin-top: 10px;
+}
+
+.diamond-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #4facfe;
+}
+
+.popular-badge {
+    background: linear-gradient(135deg, #ff0844 0%, #ffb199 100%);
+    color: white;
+}
+
+@keyframes shine {
+    0% {
+        opacity: 0;
+        transform: translateX(-100%) rotate(45deg);
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100%) rotate(45deg);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Diamond Purchase Modal */
+.diamond-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 400px;
+    width: 90%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.diamond-modal.active {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.modal-close:hover {
+    opacity: 1;
+}
+
+.modal-content {
+    text-align: center;
+}
+
+.payment-options {
+    display: grid;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.payment-option {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.payment-option:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.payment-option.selected {
+    background: rgba(79, 172, 254, 0.2);
+    border: 2px solid #4facfe;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Diamond Tasks Styles */
+.diamond-tasks {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.task-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--card-bg);
+    padding: 20px 25px;
+    border-radius: 15px;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.task-card:hover {
+    transform: translateX(10px);
+    border-color: var(--primary-color);
+    background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1));
+    box-shadow: 0 5px 15px rgba(79, 172, 254, 0.2);
+}
+
+.task-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.task-number {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    min-width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: white;
+}
+
+.task-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.task-reward {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 15px;
+    border-radius: 20px;
+}
+
+.task-reward .diamond-icon {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.task-reward-amount {
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+/* Responsive Task Styles */
+@media (max-width: 768px) {
+    .diamond-tasks {
+        padding: 15px;
+    }
+
+    .task-card {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .task-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .task-number {
+        min-width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .task-title {
+        font-size: 1rem;
+    }
+
+    .task-reward {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .task-card:hover {
+        transform: translateY(-5px);
+    }
+} 

@@ -2,109 +2,163 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    background: var(--bg-dark);
+    background: #1e1e2f;
     padding: 20px;
+    align-items: center;
+    justify-content: center;
 }
 
 .payment-layout {
-    max-width: 1000px;
+    max-width: 800px;
     margin: 0 auto;
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
+    padding: 20px;
+    background: #2a2a3b;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .balance-section {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .balance-card {
-    background: var(--card-bg);
-    border-radius: var(--border-radius);
-    padding: 25px;
-    box-shadow: var(--card-shadow);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #333344;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border: none;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .balance-card:hover {
     transform: translateY(-2px);
-    box-shadow: var(--card-shadow-hover);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 .balance-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .balance-header h2 {
-    font-size: 1.2rem;
-    color: var(--text-primary);
-    font-weight: 600;
-    background: linear-gradient(45deg, var(--primary), var(--primary-light));
+    font-size: 1.5rem;
+    color: #fff;
+    font-weight: 700;
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-}
-
-.diamond-balance,
-.tl-balance {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--primary);
-    padding: 8px 16px;
-    background: var(--primary-dark);
-    border-radius: 12px;
-    border: 1px solid var(--primary);
-    box-shadow: 0 0 15px rgba(33, 150, 243, 0.2);
 }
 
 .balance-info {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    font-size: 1rem;
+    color: #aaa;
+}
+
+.conversion-section, .withdrawal-section {
+    background: #333344;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.conversion-section:hover, .withdrawal-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.input-group input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: #2a2a3b;
+    color: #fff;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: #6a11cb;
+    outline: none;
+}
+
+.convert-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.convert-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+}
+
+.convert-btn:active {
+    transform: translateY(1px);
+}
+
+.diamond-balance,
+.tl-balance {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2575fc;
+    padding: 8px 16px;
+    background: #444455;
+    border-radius: 12px;
+    border: 1px solid #6a11cb;
+    box-shadow: 0 0 15px rgba(33, 150, 243, 0.2);
 }
 
 .exchange-rate,
 .min-withdrawal,
 .available-withdrawal {
-    color: var(--text-secondary);
+    color: #aaa;
     font-size: 0.95rem;
 }
 
 .tl-equivalent {
     font-size: 1.1rem;
-    color: var(--text-primary);
+    color: #fff;
     font-weight: 500;
-}
-
-.conversion-section,
-.withdrawal-section {
-    background: var(--card-bg);
-    border-radius: var(--border-radius);
-    padding: 25px;
-    box-shadow: var(--card-shadow);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.conversion-section:hover,
-.withdrawal-section:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--card-shadow-hover);
 }
 
 .conversion-section h2,
 .withdrawal-section h2 {
     font-size: 1.3rem;
-    color: var(--text-primary);
+    color: #fff;
     margin-bottom: 25px;
     font-weight: 600;
-    background: linear-gradient(45deg, var(--primary), var(--primary-light));
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -116,99 +170,19 @@
     gap: 20px;
 }
 
-.input-group {
-    position: relative;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-}
-
-.input-group input {
-    width: 100%;
-    padding: 12px 45px 12px 15px;
-    border: 1px solid var(--border-color);
-    background: var(--bg-darker);
-    border-radius: var(--border-radius);
-    color: var(--text-primary);
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-}
-
-.input-group input:focus {
-    border-color: var(--primary);
-    outline: none;
-    box-shadow: 0 0 0 3px var(--primary-dark);
-}
-
 .currency-label {
     position: absolute;
     right: 15px;
     top: 38px;
-    color: var(--text-secondary);
+    color: #aaa;
     font-size: 1.1rem;
 }
 
 .conversion-arrow {
     display: flex;
     justify-content: center;
-    color: var(--text-secondary);
+    color: #aaa;
     margin: 10px 0;
-}
-
-.convert-btn,
-.withdraw-btn {
-    background: linear-gradient(45deg, var(--primary), var(--primary-light));
-    color: white;
-    border: none;
-    padding: 15px;
-    border-radius: var(--border-radius);
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 10px;
-    position: relative;
-    overflow: hidden;
-}
-
-.convert-btn:hover,
-.withdraw-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
-}
-
-.convert-btn:active,
-.withdraw-btn:active {
-    transform: translateY(1px);
-}
-
-.convert-btn::after,
-.withdraw-btn::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-        to bottom right,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.1) 50%,
-        rgba(255, 255, 255, 0) 100%
-    );
-    transform: rotate(45deg);
-    transition: all 0.3s ease;
-    opacity: 0;
-}
-
-.convert-btn:hover::after,
-.withdraw-btn:hover::after {
-    opacity: 1;
-    transform: rotate(45deg) translate(50%, 50%);
 }
 
 /* IBAN Input Styles */
@@ -415,4 +389,84 @@
         font-size: 1rem;
         padding: 10px;
     }
+}
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.back-btn:hover {
+    transform: translateX(-5px);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.back-btn svg {
+    stroke: currentColor;
+}
+
+.withdraw-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.withdraw-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+}
+
+.withdraw-btn:active {
+    transform: translateY(1px);
+}
+
+.iban-group .bank-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    opacity: 0;
+    height: 0;
+    transition: all 0.3s ease;
+}
+
+.iban-group .bank-info.visible {
+    opacity: 1;
+    height: auto;
+}
+
+.iban-group .bank-info .bank-icon {
+    width: 24px;
+    height: 24px;
+    color: #aaa;
+}
+
+.iban-group .bank-info .bank-name {
+    color: #fff;
+    font-size: 14px;
+}
+
+.iban-group .bank-info .icon-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 4px;
 } 

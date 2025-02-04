@@ -8,6 +8,10 @@ class AdRewardGame {
         this.dailyWatchLimit = 50; // Günlük izleme limiti
         this.watchedToday = this.loadWatchedCount();
         this.lastResetDate = this.loadLastResetDate();
+        this.waitTime = 60; // Bekleme süresi (saniye)
+        this.canWatch = true; // İzleme durumu
+        this.countdown = null; // Sayaç zamanlayıcısı
+        this.lastWatchTime = this.loadLastWatchTime();
         this.rewardTiers = [
             { count: 5, reward: 25 },    // 5 reklam = 25 elmas
             { count: 15, reward: 100 },   // 15 reklam = 100 elmas
@@ -17,6 +21,8 @@ class AdRewardGame {
 
         this.init();
         this.checkDailyReset();
+        this.updateAdStats();
+        this.checkWaitTime();
     }
 
     init() {
@@ -51,9 +57,18 @@ class AdRewardGame {
         return localStorage.getItem('lastResetDate') || new Date().toDateString();
     }
 
+    loadLastWatchTime() {
+        const time = localStorage.getItem('lastWatchTime');
+        return time ? parseInt(time) : 0;
+    }
+
     saveWatchedCount() {
         localStorage.setItem('adWatchCount', this.watchedToday.toString());
         localStorage.setItem('lastResetDate', this.lastResetDate);
+    }
+
+    saveLastWatchTime() {
+        localStorage.setItem('lastWatchTime', Date.now().toString());
     }
 
     checkDailyReset() {
@@ -131,7 +146,105 @@ class AdRewardGame {
         });
     }
 
+    updateAdStats() {
+        // İstatistik elementlerini bul
+        const watchedElement = document.querySelector('.stat-box:nth-child(1) .stat-value');
+        const remainingElement = document.querySelector('.stat-box:nth-child(2) .stat-value');
+        const earnedElement = document.querySelector('.stat-box:nth-child(3) .stat-value');
+
+        // Kazanılan toplam elmas miktarını hesapla
+        let totalEarned = 0;
+        this.rewardTiers.forEach(tier => {
+            if (this.watchedToday >= tier.count) {
+                totalEarned += tier.reward;
+            }
+        });
+
+        // İstatistikleri güncelle
+        if (watchedElement) watchedElement.textContent = this.watchedToday;
+        if (remainingElement) remainingElement.textContent = this.dailyWatchLimit - this.watchedToday;
+        if (earnedElement) earnedElement.textContent = totalEarned;
+    }
+
+    checkWaitTime() {
+        const now = Date.now();
+        const timeDiff = Math.floor((now - this.lastWatchTime) / 1000);
+        
+        if (timeDiff < this.waitTime) {
+            this.canWatch = false;
+            const remainingTime = this.waitTime - timeDiff;
+            this.startCountdown(remainingTime);
+        } else {
+            this.canWatch = true;
+            this.updateWatchButton(true);
+        }
+    }
+
+    startCountdown(seconds) {
+        if (this.countdown) {
+            clearInterval(this.countdown);
+        }
+
+        const watchButton = document.querySelector('.watch-ad-btn');
+        const updateButton = (time) => {
+            if (time <= 0) {
+                watchButton.innerHTML = `
+                    <div class="btn-content">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M10,16.5V7.5L16,12M20,4.4C19.4,4.2 15.7,4 12,4C8.3,4 4.6,4.19 4,4.38C2.44,4.9 2,8.4 2,12C2,15.59 2.44,19.1 4,19.61C4.6,19.81 8.3,20 12,20C15.7,20 19.4,19.81 20,19.61C21.56,19.1 22,15.59 22,12C22,8.4 21.56,4.91 20,4.4Z" />
+                        </svg>
+                        <span>Reklam İzle</span>
+                    </div>
+                `;
+                watchButton.disabled = false;
+                watchButton.classList.remove('disabled');
+                this.canWatch = true;
+                clearInterval(this.countdown);
+            } else {
+                watchButton.innerHTML = `
+                    <div class="btn-content">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z"/>
+                        </svg>
+                        <span>${Math.floor(time / 60)}:${(time % 60).toString().padStart(2, '0')}</span>
+                    </div>
+                `;
+                watchButton.disabled = true;
+                watchButton.classList.add('disabled');
+            }
+        };
+
+        updateButton(seconds);
+        this.countdown = setInterval(() => {
+            seconds--;
+            updateButton(seconds);
+        }, 1000);
+    }
+
+    updateWatchButton(enabled) {
+        const watchButton = document.querySelector('.watch-ad-btn');
+        if (enabled) {
+            watchButton.disabled = false;
+            watchButton.classList.remove('disabled');
+            watchButton.innerHTML = `
+                <div class="btn-content">
+                    <svg viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="currentColor" d="M10,16.5V7.5L16,12M20,4.4C19.4,4.2 15.7,4 12,4C8.3,4 4.6,4.19 4,4.38C2.44,4.9 2,8.4 2,12C2,15.59 2.44,19.1 4,19.61C4.6,19.81 8.3,20 12,20C15.7,20 19.4,19.81 20,19.61C21.56,19.1 22,15.59 22,12C22,8.4 21.56,4.91 20,4.4Z" />
+                    </svg>
+                    <span>Reklam İzle</span>
+                </div>
+            `;
+        } else {
+            watchButton.disabled = true;
+            watchButton.classList.add('disabled');
+        }
+    }
+
     async watchAd() {
+        if (!this.canWatch) {
+            return;
+        }
+
         if (this.watchedToday >= this.dailyWatchLimit) {
             this.notificationManager.show('Günlük izleme limitine ulaştınız! Yarın tekrar gelin.', 'info');
             return;
@@ -161,6 +274,12 @@ class AdRewardGame {
         this.watchedToday++;
         this.saveWatchedCount();
         
+        // Son izleme zamanını kaydet ve sayacı başlat
+        this.lastWatchTime = Date.now();
+        this.saveLastWatchTime();
+        this.canWatch = false;
+        this.startCountdown(this.waitTime);
+        
         // Ödül kontrolü
         const earnedReward = this.checkRewards();
         if (earnedReward > 0) {
@@ -174,6 +293,7 @@ class AdRewardGame {
         this.updateProgress();
         this.updateDiamondCount();
         this.createRewardTiers();
+        this.updateAdStats();
         
         // Limit kontrolü
         if (this.watchedToday >= this.dailyWatchLimit) {

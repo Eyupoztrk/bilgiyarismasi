@@ -2,7 +2,9 @@ export class DiamondManager {
     constructor() {
         this.diamonds = 0;
         this.observers = [];
+        this.completedTasks = new Set();
         this.loadDiamonds();
+        this.loadCompletedTasks();
     }
 
     // Singleton pattern
@@ -21,8 +23,19 @@ export class DiamondManager {
         this.updateUI();
     }
 
+    loadCompletedTasks() {
+        const savedTasks = localStorage.getItem('completedTasks');
+        if (savedTasks) {
+            this.completedTasks = new Set(JSON.parse(savedTasks));
+        }
+    }
+
     saveDiamonds() {
         localStorage.setItem('userDiamonds', this.diamonds.toString());
+    }
+
+    saveCompletedTasks() {
+        localStorage.setItem('completedTasks', JSON.stringify([...this.completedTasks]));
     }
 
     addDiamonds(amount) {
@@ -43,6 +56,33 @@ export class DiamondManager {
 
     getDiamonds() {
         return this.diamonds;
+    }
+
+    // Görev tamamlama işlemleri
+    completeTask(taskId) {
+        if (!this.isTaskCompleted(taskId)) {
+            this.completedTasks.add(taskId);
+            this.saveCompletedTasks();
+            return true;
+        }
+        return false;
+    }
+
+    isTaskCompleted(taskId) {
+        return this.completedTasks.has(taskId);
+    }
+
+    resetTask(taskId) {
+        if (this.completedTasks.has(taskId)) {
+            this.completedTasks.delete(taskId);
+            this.saveCompletedTasks();
+            return true;
+        }
+        return false;
+    }
+
+    getCompletedTasks() {
+        return [...this.completedTasks];
     }
 
     // Observer pattern için metodlar

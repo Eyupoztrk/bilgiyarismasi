@@ -15,9 +15,22 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    color: #fff;
     text-decoration: none;
-    color: #333;
     font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.back-btn:hover {
+    transform: translateX(-5px);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.back-btn svg {
+    stroke: currentColor;
 }
 
 .user-info {
@@ -49,12 +62,12 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    background: var(--bg-dark);
+    background: var(--bg-main);
 }
 
 .game-header {
     padding: 15px 20px;
-    background: var(--header-bg);
+    background: var(--bg-card);
     border-bottom: 1px solid var(--border-color);
 }
 
@@ -66,7 +79,7 @@
 .header-center h1 {
     font-size: 1.2rem;
     color: var(--text-primary);
-    background: linear-gradient(45deg, #3498db, #2ecc71);
+    background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 700;
@@ -97,11 +110,11 @@
 .daily-progress-section,
 .rewards-section,
 .ad-section {
-    background: var(--card-bg);
-    border-radius: var(--border-radius);
-    box-shadow: var(--card-shadow);
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
     padding: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
 }
 
 .section-header {
@@ -139,15 +152,15 @@
     font-weight: 600;
     color: var(--primary);
     padding: 6px 12px;
-    background: var(--primary-light);
-    border-radius: 20px;
+    background: var(--bg-card-hover);
+    border-radius: var(--radius-sm);
 }
 
 .daily-progress {
-    background: var(--bg-darker);
+    background: var(--bg-card-hover);
     padding: 15px;
-    border-radius: var(--border-radius);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
 }
 
 .progress-text {
@@ -160,7 +173,7 @@
 .progress-bar {
     width: 100%;
     height: 8px;
-    background: var(--bg-darker);
+    background: var(--bg-card-hover);
     border-radius: 4px;
     overflow: hidden;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
@@ -187,7 +200,7 @@
 }
 
 .reward-tiers::-webkit-scrollbar-track {
-    background: var(--bg-darker);
+    background: var(--bg-card-hover);
     border-radius: 2px;
 }
 
@@ -197,14 +210,14 @@
 }
 
 .reward-tier {
-    background: var(--bg-darker);
+    background: var(--bg-card-hover);
     padding: 15px;
-    border-radius: var(--border-radius);
+    border-radius: var(--radius-md);
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
 }
 
 .reward-tier.completed {
@@ -234,8 +247,8 @@
     color: var(--primary);
     font-size: 1rem;
     padding: 6px 12px;
-    background: var(--bg-light);
-    border-radius: 20px;
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
 }
 
 .ad-section {
@@ -252,10 +265,10 @@
 }
 
 .ad-info-card {
-    background: var(--bg-darker);
+    background: var(--bg-card-hover);
     padding: 20px;
-    border-radius: var(--border-radius);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
 }
 
 .ad-stats {
@@ -266,9 +279,9 @@
 }
 
 .stat-box {
-    background: var(--bg-light);
+    background: var(--bg-card);
     padding: 15px;
-    border-radius: var(--border-radius);
+    border-radius: var(--radius-md);
     text-align: center;
     transition: transform 0.3s ease;
 }
@@ -298,28 +311,39 @@
     width: 100%;
     padding: 15px 30px;
     font-size: 1.1rem;
-    background: linear-gradient(45deg, var(--primary), var(--primary-light));
-    color: white;
+    background: var(--gradient-primary);
+    color: var(--text-primary);
     border: none;
-    border-radius: var(--border-radius);
+    border-radius: var(--radius-md);
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-weight: 600;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
+    transition: all var(--transition-normal);
 }
 
 .watch-ad-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+    box-shadow: var(--shadow-md);
 }
 
-.watch-ad-btn:active {
-    transform: translateY(1px);
+.watch-ad-btn.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    background: var(--text-muted);
+}
+
+.watch-ad-btn .btn-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.watch-ad-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+.watch-ad-btn.disabled .btn-content {
+    color: #ccc;
 }
 
 .btn-content {
@@ -359,12 +383,12 @@
 }
 
 .reward-item {
-    background: var(--bg-light);
+    background: var(--bg-card);
     padding: 20px;
-    border-radius: var(--border-radius);
+    border-radius: var(--radius-md);
     text-align: center;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all var(--transition-normal);
+    border: 1px solid var(--border-color);
     position: relative;
     overflow: hidden;
 }

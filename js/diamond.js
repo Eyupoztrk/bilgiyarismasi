@@ -5,14 +5,10 @@ class DiamondGame {
     constructor() {
         this.notificationManager = new NotificationManager();
         this.diamondManager = DiamondManager.getInstance();
-        this.completedTasks = [];
         this.totalTasks = 3;
         this.taskLinks = null;
         this.refreshCost = 10; // Yenileme maliyeti
-        
-        // LocalStorage'dan verileri yükle
-        this.loadProgress();
-        
+
         // Task linklerini yükle ve görevleri başlat
         this.loadTaskLinks().then(() => {
             this.initializeTasks();
@@ -20,9 +16,6 @@ class DiamondGame {
         
         // Progress bar'ı güncelle
         this.updateProgress();
-        
-        // Tamamlanmış görevleri işaretle
-        this.markCompletedTasks();
     }
 
     async loadTaskLinks() {
@@ -47,79 +40,90 @@ class DiamondGame {
         taskItems[1].querySelector('.task-link').href = this.getRandomLink('reading_links');
         taskItems[2].querySelector('.task-link').href = this.getRandomLink('search_links');
 
-        this.completedTasks = [];
-        this.updateProgress();
-        this.saveProgress();
-
-        taskItems.forEach(item => {
-            item.classList.remove('completed');
-            const taskLink = item.querySelector('.task-link');
-            taskLink.textContent = 'Göreve Git';
+        // Tamamlanmış görevleri işaretle
+        taskItems.forEach((item, index) => {
+            if (this.diamondManager.isTaskCompleted(`task_${index}`)) {
+                item.classList.add('completed');
+                const taskLink = item.querySelector('.task-link');
+                taskLink.textContent = 'Tamamlandı';
+                taskLink.style.pointerEvents = 'none';
+            } else {
+                item.classList.remove('completed');
+                const taskLink = item.querySelector('.task-link');
+                taskLink.textContent = 'Göreve Git';
+                taskLink.style.pointerEvents = 'auto';
+            }
         });
+
+        this.updateProgress();
     }
 
     refreshTasks() {
-        this.notificationManager.show('Reklam yükleniyor...', 'info');
-        
-        setTimeout(() => {
-            this.diamondManager.addDiamonds(this.refreshCost);
-            this.initializeTasks();
-            this.notificationManager.show(`Görevler yenilendi! ${this.refreshCost} 💎 kazandınız!`, 'success');
-            this.saveProgress();
-        }, 2000);
-    }
-
-    loadProgress() {
-        const savedProgress = localStorage.getItem('diamondGameProgress');
-        if (savedProgress) {
-            const progress = JSON.parse(savedProgress);
-            this.completedTasks = progress.completedTasks || [];
+        if (this.diamondManager.getDiamonds() >= this.refreshCost) {
+            this.notificationManager.show('Reklam yükleniyor...', 'info');
+            
+            setTimeout(() => {
+                this.diamondManager.removeDiamonds(this.refreshCost);
+                
+                // Tüm görevlerin durumlarını sıfırla
+                for (let i = 0; i < this.totalTasks; i++) {
+                    this.diamondManager.resetTask(`task_${i}`);
+                }
+                
+                this.initializeTasks();
+                this.notificationManager.show(`Görevler yenilendi! ${this.refreshCost} 💎 harcandı!`, 'success');
+            }, 2000);
+        } else {
+            this.notificationManager.show('Yeterli elmasınız yok!', 'error');
         }
     }
 
-    saveProgress() {
-        const progress = {
-            completedTasks: this.completedTasks
-        };
-        localStorage.setItem('diamondGameProgress', JSON.stringify(progress));
-    }
-
     updateProgress() {
-        const progress = (this.completedTasks.length / this.totalTasks) * 100;
+        const completedCount = this.getCompletedTaskCount();
+        const progress = (completedCount / this.totalTasks) * 100;
         document.querySelector('.progress').style.width = `${progress}%`;
         document.querySelector('.progress-text').textContent = 
-            `${this.completedTasks.length}/${this.totalTasks} Görev Tamamlandı`;
+            `${completedCount}/${this.totalTasks} Görev Tamamlandı`;
     }
 
-    markCompletedTasks() {
-        this.completedTasks.forEach(taskIndex => {
+    getCompletedTaskCount() {
+        let count = 0;
+        for (let i = 0; i < this.totalTasks; i++) {
+            if (this.diamondManager.isTaskCompleted(`task_${i}`)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    completeTask(taskIndex, reward) {
+        const taskId = `task_${taskIndex}`;
+        
+        if (this.diamondManager.isTaskCompleted(taskId)) {
+            this.notificationManager.show('Bu görevi zaten tamamladınız!', 'info');
+            return;
+        }
+
+        if (this.diamondManager.completeTask(taskId)) {
+            this.diamondManager.addDiamonds(reward);
+            this.updateProgress();
+            
+            // Görevi tamamlandı olarak işaretle
             const taskItem = document.querySelectorAll('.task-item')[taskIndex];
             if (taskItem) {
                 taskItem.classList.add('completed');
                 const taskLink = taskItem.querySelector('.task-link');
                 taskLink.textContent = 'Tamamlandı';
+                taskLink.style.pointerEvents = 'none';
             }
-        });
-    }
 
-    completeTask(taskIndex, reward) {
-        if (this.completedTasks.includes(taskIndex)) {
-            this.notificationManager.show('Bu görevi zaten tamamladınız!', 'info');
-            return;
-        }
+            this.notificationManager.show(`Tebrikler! ${reward} 💎 kazandınız!`, 'success');
 
-        this.completedTasks.push(taskIndex);
-        this.diamondManager.addDiamonds(reward);
-        this.updateProgress();
-        this.markCompletedTasks();
-
-        this.notificationManager.show(`Tebrikler! ${reward} 💎 kazandınız!`, 'success');
-        this.saveProgress();
-
-        if (this.completedTasks.length === this.totalTasks) {
-            setTimeout(() => {
-                this.notificationManager.show('Tüm görevleri tamamladınız! 🎉', 'success');
-            }, 1000);
+            if (this.getCompletedTaskCount() === this.totalTasks) {
+                setTimeout(() => {
+                    this.notificationManager.show('Tüm görevleri tamamladınız! 🎉', 'success');
+                }, 1000);
+            }
         }
     }
 }

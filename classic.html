@@ -35,7 +35,7 @@
         <main class="game-main">
             <div class="prize-section">
                 <div class="prize-pool">
-                    <h3>Ödül</h3>
+                    <h3>Ödül Havuzu</h3>
                     <div class="prize-amount">100 💎</div>
                 </div>
                 <div class="participants">
@@ -47,8 +47,8 @@
             <div class="question-section">
                 <div class="question-card">
                     <div class="question-header">
-                        <span class="question-number">Soru 1</span>
-                        <span class="time-left">Süre Sınırı Yok</span>
+                        <span class="question-number">Soru:</span>
+                        <span class="time-left">İlk Bilen Kazanır</span>
                     </div>
                     <div class="question-content">
                         <p class="question-text"></p>
@@ -69,11 +69,12 @@
 
             <div class="hint-section">
                 <button class="show-hints-btn">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
-                        <path d="M12 17H12.01M12 14V8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                     İpuçlarını Göster
+                </button>
+                <button class="buy-attempts-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                    Hak Satın Al (<span class="attempts-count">5</span>)
                 </button>
             </div>
         </main>
@@ -90,6 +91,41 @@
         </div>
         <div class="hints-content">
             <!-- İpuçları buraya eklenecek -->
+        </div>
+    </div>
+
+    <!-- Hak Satın Alma Penceresi -->
+    <div class="attempts-overlay" style="display: none;">
+        <div class="attempts-window">
+            <div class="attempts-header">
+                <h3>Cevaplama Hakkı Satın Al</h3>
+                <button class="close-attempts-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="attempts-content">
+                <div class="attempt-package" data-amount="1" data-cost="20">
+                    <div class="package-info">
+                        <span class="package-amount">1 Hak</span>
+                        <span class="package-cost">20 💎</span>
+                    </div>
+                </div>
+                <div class="attempt-package" data-amount="3" data-cost="50">
+                    <div class="package-info">
+                        <span class="package-amount">3 Hak</span>
+                        <span class="package-cost">50 💎</span>
+                    </div>
+                </div>
+                <div class="attempt-package" data-amount="5" data-cost="80">
+                    <div class="package-info">
+                        <span class="package-amount">5 Hak</span>
+                        <span class="package-cost">80 💎</span>
+                    </div>
+                </div>
+            </div>
+            <div class="insufficient-diamonds" style="display: none;">
+                Yetersiz elmas! Daha fazla elmas kazanmak için görevleri tamamlayın.
+            </div>
         </div>
     </div>
 

@@ -8,8 +8,15 @@ class ClassicGame {
         this.entryFee = 50; // Katılım ücreti (elmas)
         this.currentQuestion = null;
         this.hintCost = 20; // Her ipucu için elmas maliyeti
-        this.unlockedHints = new Set(); // Açılan ipuçlarını takip et
+        
+        // Açılan ipuçlarını localStorage'dan al
+        const unlockedHintsJson = localStorage.getItem('unlockedHints');
+        this.unlockedHints = unlockedHintsJson ? new Set(JSON.parse(unlockedHintsJson)) : new Set();
+        
         this.participationTaskId = 'classic_participation'; // Katılım durumu için özel task ID
+        
+        // Hak sayısını localStorage'dan al, yoksa default 5 olsun
+        this.attempts = parseInt(localStorage.getItem('classicAttempts')) || 5;
         
         // Ödül ve katılımcı sayısını localStorage'dan al
         this.currentPrize = parseInt(localStorage.getItem('classicPrize')) || 100;
@@ -17,7 +24,7 @@ class ClassicGame {
         
         this.questions = [
             {
-                text: "Evrendeki kayıp bilim insanının son koordinatları hangi galaksideydi? Evrendeki kayıp bilim insanının son koordinatları hangi galaksideydi? Evrendeki kayıp bilim insanının son koordinatları hangi galaksideydi? Evrendeki kayıp bilim insanının son koordinatları hangi galaksideydi?",
+                text: "Bu eser, bir felaket sırasında neredeyse tamamen yok oldu ve geriye sadece az sayıda kopya ile birkaç detay kaldı. Yine de sanat tarihinin en etkileyici eserlerinden biri olarak kabul edilir. Eserin yaratıldığı dönemde sanatçısı, kilisenin baskısı altındaydı ve eserinin bir bölümü dönemin sansürüne uğradı. Ancak günümüze kalan fragmanları bile onun dehasını ortaya koymaktadır. İlginç bir şekilde, modern teknoloji sayesinde eserin kayıp kısımlarına dair ilginç ipuçları ortaya çıkarılmıştır. Bu ipuçları bir yapay zeka algoritmasıyla yeniden canlandırılmıştır.",
                 answer: "andromeda",
                 hints: [
                     {
@@ -52,6 +59,7 @@ class ClassicGame {
         this.setupEventListeners();
         this.initAnimations();
         this.updateDiamondCount();
+        this.updateAttemptsCount();
         
         // Arayüzü güncelle
         document.querySelector('.participant-count').textContent = this.participantCount;
@@ -103,71 +111,44 @@ class ClassicGame {
 
     createHintButtons() {
         const hintsContent = document.querySelector('.hints-content');
-        hintsContent.innerHTML = ''; // Mevcut ipuçlarını temizle
+        hintsContent.innerHTML = '';
 
         this.currentQuestion.hints.forEach((hint, index) => {
             const hintItem = document.createElement('div');
             hintItem.className = `hint-item ${this.unlockedHints.has(index) ? 'unlocked' : 'locked'}`;
             
-            if (this.unlockedHints.has(index)) {
-                hintItem.innerHTML = `
-                    <div class="hint-text">${hint.text}</div>
-                `;
-            } else {
-                hintItem.innerHTML = `
-                    <div class="hint-text">İpucu ${index + 1}</div>
-                    <div class="hint-cost">
-                        <span>${hint.cost}</span>
-                        <svg class="diamond-icon" viewBox="0 0 24 24" width="16" height="16">
-                            <path fill="currentColor" d="M12,2L2,12L12,22L22,12L12,2Z"/>
-                        </svg>
-                    </div>
-                `;
-                hintItem.addEventListener('click', () => this.handleHintClick(index));
+            const hintText = this.unlockedHints.has(index) ? hint.text : '🔒 Bu ipucunu görmek için kilidi açın';
+            
+            hintItem.innerHTML = `
+                <span class="hint-text">${hintText}</span>
+                ${this.unlockedHints.has(index) ? '' : `
+                    <span class="hint-cost">
+                        ${hint.cost} 💎
+                    </span>
+                `}
+            `;
+
+            if (!this.unlockedHints.has(index)) {
+                hintItem.addEventListener('click', () => this.unlockHint(index, hint.cost));
             }
 
             hintsContent.appendChild(hintItem);
         });
     }
 
-    handleHintClick(hintIndex) {
-        const hint = this.currentQuestion.hints[hintIndex];
-
-        if (this.unlockedHints.has(hintIndex)) {
-            return; // İpucu zaten açık
-        }
-
-        if (this.diamondManager.getDiamonds() >= hint.cost) {
-            this.diamondManager.removeDiamonds(hint.cost);
-            this.unlockedHints.add(hintIndex);
+    unlockHint(index, cost) {
+        if (this.diamondManager.getDiamonds() >= cost) {
+            this.diamondManager.removeDiamonds(cost);
             this.updateDiamondCount();
-            this.createHintButtons();
-            this.notificationManager.show('İpucu açıldı!', 'success');
-
-            // İpucu satın alma animasyonu
-            gsap.from('.diamond-count', {
-                scale: 0.5,
-                duration: 0.3,
-                ease: 'back.out'
-            });
-
-            // Yeni ipucu animasyonu
-            const hintItems = document.querySelectorAll('.hint-item');
-            gsap.from(hintItems[hintIndex], {
-                scale: 0.9,
-                opacity: 0,
-                duration: 0.3,
-                ease: 'back.out'
-            });
-        } else {
-            this.notificationManager.show('Yeterli elmasınız yok!', 'error');
             
-            // Yetersiz elmas animasyonu
-            gsap.to('.diamond-counter', {
-                x: [-5, 5, -5, 5, 0],
-                duration: 0.4,
-                ease: 'power2.out'
-            });
+            // İpucunu aç ve localStorage'a kaydet
+            this.unlockedHints.add(index);
+            localStorage.setItem('unlockedHints', JSON.stringify([...this.unlockedHints]));
+            
+            this.createHintButtons();
+            this.notificationManager.show('İpucu başarıyla açıldı!', 'success');
+        } else {
+            this.notificationManager.show('Yetersiz elmas! Daha fazla elmas kazanmak için görevleri tamamlayın.', 'error');
         }
     }
 
@@ -210,6 +191,70 @@ class ClassicGame {
                 this.hideHintsWindow();
             }
         });
+
+        // Hak satın alma penceresi kontrolleri
+        const buyAttemptsBtn = document.querySelector('.buy-attempts-btn');
+        const attemptsOverlay = document.querySelector('.attempts-overlay');
+        const attemptsWindow = document.querySelector('.attempts-window');
+        const closeAttemptsBtn = document.querySelector('.close-attempts-btn');
+        const attemptPackages = document.querySelectorAll('.attempt-package');
+        const insufficientDiamondsWarning = document.querySelector('.insufficient-diamonds');
+
+        buyAttemptsBtn.addEventListener('click', () => {
+            attemptsOverlay.style.display = 'flex';
+            attemptsWindow.style.display = 'block';
+            this.updateDiamondCount();
+        });
+
+        closeAttemptsBtn.addEventListener('click', () => {
+            attemptsOverlay.style.display = 'none';
+            attemptsWindow.style.display = 'none';
+        });
+
+        attemptsOverlay.addEventListener('click', (e) => {
+            if (e.target === attemptsOverlay) {
+                attemptsOverlay.style.display = 'none';
+                attemptsWindow.style.display = 'none';
+            }
+        });
+
+        attemptPackages.forEach(packageItem => {
+            packageItem.addEventListener('click', () => {
+                const amount = parseInt(packageItem.dataset.amount);
+                const cost = parseInt(packageItem.dataset.cost);
+                const currentDiamonds = this.diamondManager.getDiamonds();
+
+                if (currentDiamonds >= cost) {
+                    // Elmasları azalt
+                    this.diamondManager.removeDiamonds(cost);
+                    this.updateDiamondCount();
+                    
+                    // Hakları artır
+                    this.attempts += amount;
+                    this.updateAttemptsCount();
+
+                    // Input ve submit butonunu tekrar aktif et
+                    const answerInput = document.querySelector('.answer-input');
+                    const submitBtn = document.querySelector('.submit-btn');
+                    answerInput.disabled = false;
+                    answerInput.placeholder = 'Cevabınızı buraya yazın...';
+                    submitBtn.disabled = false;
+
+                    // Pencereyi kapat
+                    attemptsOverlay.style.display = 'none';
+                    attemptsWindow.style.display = 'none';
+
+                    // Başarılı bildirim göster
+                    this.notificationManager.show(`${amount} adet cevaplama hakkı satın alındı!`, 'success');
+                } else {
+                    // Yetersiz elmas uyarısı
+                    insufficientDiamondsWarning.style.display = 'flex';
+                    setTimeout(() => {
+                        insufficientDiamondsWarning.style.display = 'none';
+                    }, 3000);
+                }
+            });
+        });
     }
 
     showHintsWindow() {
@@ -230,6 +275,11 @@ class ClassicGame {
     }
 
     checkAnswer() {
+        if (this.attempts <= 0) {
+            this.notificationManager.show('Cevaplama hakkınız kalmadı! Yeni hak satın alın.', 'error');
+            return;
+        }
+
         const answerInput = document.querySelector('.answer-input');
         const userAnswer = answerInput.value.trim().toLowerCase();
 
@@ -239,88 +289,74 @@ class ClassicGame {
             this.handleWrongAnswer();
         }
 
+        // Cevap gönderildikten sonra hakkı azalt ve localStorage'a kaydet
+        this.attempts--;
+        this.updateAttemptsCount();
+
         answerInput.value = '';
     }
 
     handleCorrectAnswer() {
-        // Elmasları direkt olarak kullanıcının hesabına ekle
+        // Kazanılan elmasları ekle
         this.diamondManager.addDiamonds(this.currentPrize);
-        
-        // Tebrik ekranını göster
+        this.updateDiamondCount();
+
+        // Tebrik penceresini oluştur
         const overlay = document.createElement('div');
         overlay.className = 'completion-overlay';
+        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.9)'; // Arkaplan opaklığını artır
+        
         overlay.innerHTML = `
-            <div class="completion-content">
+            <div class="completion-content" style="background: var(--bg-card); border: 2px solid var(--primary-light);">
                 <h2>Tebrikler!</h2>
                 <p>Soruyu doğru cevaplayarak</p>
                 <div class="final-prize">${this.currentPrize} 💎</div>
                 <p>kazandınız!</p>
-                
                 <div class="share-buttons">
                     <button class="share-btn whatsapp">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z"/>
                         </svg>
                         WhatsApp'ta Paylaş
                     </button>
                     <button class="share-btn twitter">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
                         </svg>
                         Twitter'da Paylaş
                     </button>
                 </div>
-                
-                <button class="back-to-home">
-                    Ana Sayfaya Dön
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                    </svg>
-                </button>
+                <button class="back-to-home">Ana Sayfaya Dön</button>
             </div>
         `;
-        
+
         document.body.appendChild(overlay);
-        
-        // Tebrik animasyonları
-        gsap.from('.completion-content', {
-            scale: 0.5,
-            opacity: 0,
-            duration: 0.5,
-            ease: 'back.out'
-        });
-        
-        gsap.from('.final-prize', {
-            scale: 0,
-            opacity: 0,
-            duration: 0.5,
-            delay: 0.3,
-            ease: 'back.out'
-        });
-        
-        gsap.from('.share-buttons, .back-to-home', {
-            y: 50,
-            opacity: 0,
-            duration: 0.5,
-            delay: 0.5,
-            stagger: 0.1,
-            ease: 'back.out'
-        });
 
         // Paylaşım butonları için event listener'lar
-        overlay.querySelector('.share-btn.whatsapp').addEventListener('click', () => {
-            const text = `Zeka Tahtası'nda soruyu doğru cevaplayarak ${this.currentPrize} 💎 kazandım! 🎉`;
+        overlay.querySelector('.whatsapp').addEventListener('click', () => {
+            const text = `Bil Kazan'da soruyu doğru cevaplayarak ${this.currentPrize} elmas kazandım! 🎉`;
             window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
         });
 
-        overlay.querySelector('.share-btn.twitter').addEventListener('click', () => {
-            const text = `Zeka Tahtası'nda soruyu doğru cevaplayarak ${this.currentPrize} 💎 kazandım! 🎉`;
+        overlay.querySelector('.twitter').addEventListener('click', () => {
+            const text = `Bil Kazan'da soruyu doğru cevaplayarak ${this.currentPrize} elmas kazandım! 🎉`;
             window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
         });
 
         // Ana sayfaya dönüş butonu
         overlay.querySelector('.back-to-home').addEventListener('click', () => {
             window.location.href = 'index.html';
+        });
+
+        // Katılım görevini tamamlandı olarak işaretle
+        this.diamondManager.completeTask(this.participationTaskId);
+
+        // Tebrik animasyonu
+        gsap.from('.completion-content', {
+            scale: 0.8,
+            opacity: 0,
+            duration: 0.5,
+            ease: 'back.out'
         });
     }
 
@@ -459,6 +495,24 @@ class ClassicGame {
             duration: 0.5,
             ease: 'back.out'
         });
+    }
+
+    updateAttemptsCount() {
+        const attemptsCount = document.querySelector('.attempts-count');
+        if (attemptsCount) {
+            attemptsCount.textContent = this.attempts;
+        }
+        // Hak sayısını localStorage'a kaydet
+        localStorage.setItem('classicAttempts', this.attempts.toString());
+
+        // Eğer haklar bittiyse input'u devre dışı bırak
+        const answerInput = document.querySelector('.answer-input');
+        const submitBtn = document.querySelector('.submit-btn');
+        if (this.attempts <= 0 && answerInput && submitBtn) {
+            answerInput.disabled = true;
+            answerInput.placeholder = 'Cevaplama hakkınız kalmadı...';
+            submitBtn.disabled = true;
+        }
     }
 }
 

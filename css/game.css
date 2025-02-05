@@ -249,11 +249,13 @@
     display: flex;
     gap: 15px;
     margin-top: 20px;
+    width: 100%;
 }
 
 .answer-input {
     flex: 1;
-    padding: 16px 20px;
+    min-width: 400px;
+    padding: 16px 25px;
     border: 2px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     background: rgba(255, 255, 255, 0.05);
@@ -266,6 +268,11 @@
     outline: none;
     border-color: #6a11cb;
     box-shadow: 0 0 20px rgba(106, 17, 203, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.answer-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .submit-btn {
@@ -281,6 +288,7 @@
     font-size: 1.1rem;
     cursor: pointer;
     transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
 .submit-btn:hover {
@@ -319,11 +327,13 @@
 .hint-section {
     display: flex;
     justify-content: center;
+    gap: 15px;
     width: 100%;
     padding: 20px;
 }
 
-.show-hints-btn {
+.show-hints-btn,
+.buy-attempts-btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -336,24 +346,13 @@
     padding: 12px 24px;
     border-radius: 12px;
     transition: all 0.3s ease;
-    margin-top: 30px;
     border: 1px solid rgba(106, 17, 203, 0.3);
-    margin: 0 auto;
 }
 
-.show-hints-btn:hover {
+.show-hints-btn:hover,
+.buy-attempts-btn:hover {
     background: rgba(106, 17, 203, 0.2);
     transform: translateY(-2px);
-}
-
-.show-hints-btn svg {
-    width: 20px;
-    height: 20px;
-    transition: transform 0.3s ease;
-}
-
-.show-hints-btn:hover svg {
-    transform: translateY(2px);
 }
 
 /* Hints Window Styles */
@@ -573,14 +572,15 @@
     }
 
     .answer-input {
-        padding: 12px 15px;
-        font-size: 0.95rem;
+        width: 100%;
+        min-width: unset;
+        padding: 14px 20px;
     }
 
     .submit-btn {
         width: 100%;
         justify-content: center;
-        padding: 12px;
+        padding: 14px 20px;
     }
 
     /* İpucu Penceresi Mobil Stilleri */
@@ -1342,4 +1342,113 @@
     background: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(4px);
     z-index: 999;
+}
+
+/* Hak Satın Alma Penceresi Stilleri */
+.attempts-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.attempts-window {
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    padding: 25px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+}
+
+.attempts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.attempts-header h3 {
+    color: var(--text-primary);
+    font-size: 1.3rem;
+    font-weight: 600;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.close-attempts-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.3s ease;
+}
+
+.close-attempts-btn:hover {
+    transform: rotate(90deg);
+}
+
+.attempts-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.attempt-package {
+    background: var(--bg-card-hover);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    border: 1px solid var(--border-color);
+}
+
+.attempt-package:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary-light);
+    background: rgba(79, 70, 229, 0.1);
+}
+
+.package-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.package-amount {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.package-cost {
+    color: var(--primary-light);
+    font-weight: 600;
+    padding: 8px 16px;
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--primary-light);
+}
+
+.insufficient-diamonds {
+    margin-top: 15px;
+    padding: 12px;
+    background: rgba(255, 71, 87, 0.1);
+    color: #ff4757;
+    border-radius: var(--radius-sm);
+    text-align: center;
+    font-size: 0.9rem;
+    display: none;
 } 
